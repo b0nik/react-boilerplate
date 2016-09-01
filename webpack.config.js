@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin=require('extract-text-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -28,12 +29,33 @@ module.exports = {
                 query: {
                     "presets": ["react", "es2015"]
                 }
+            },
+            {
+                test:/\.css$/,
+                loader:'style!css!'
+
+            },
+            {
+                test:/\.less$/,
+                loader:ExtractTextPlugin.extract('style','css!less?strictMath&noIeCompat')
+
+            },
+            {
+               test:/\.(png|jpg|svf|ttf|eot|woff|woff2)$/,
+                exclude:/\/node_modules\//,
+                loader:'file?name=[path][name].[ext]&limit=4096'
+            },
+            {
+                test:/\.(png|jpg|svf|ttf|eot|woff|woff2)$/,
+                include:/\/node_modules\//,
+                loader:'url?name=[1].[name].[ext]&regExp=node_modules/(.*)&limit=4096'
             }
         ]
     },
     plugins:[
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.DedupePlugin(),
+        new ExtractTextPlugin('styles.css'),
         new webpack.DefinePlugin({
             NODE_ENV: JSON.stringify(NODE_ENV)
         }),

@@ -19,8 +19,11 @@ function mapStateToProps(state) {
 class Home extends Component{
 
     render(){
+        const styles=require('./styles.less');
+
         return(
-            <h1>{console.log(this.props)}{this.props.title}</h1>
+            <div className={styles.wrap}><h1 className='title'>{this.props.title}</h1></div>
+
         )
     }
 }
