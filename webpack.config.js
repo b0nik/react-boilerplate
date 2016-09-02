@@ -53,8 +53,6 @@ module.exports = {
         ]
     },
     plugins:[
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.optimize.DedupePlugin(),
         new ExtractTextPlugin('styles.css'),
         new webpack.DefinePlugin({
             NODE_ENV: JSON.stringify(NODE_ENV)
