@@ -1,5 +1,4 @@
 const webpack = require('webpack');
-const NODE_ENV = process.env.NODE_ENV || 'development';
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin=require('extract-text-webpack-plugin');
 const path = require('path');
@@ -18,7 +17,7 @@ module.exports = {
         extensions: ['', '.jsx', '.js', '.json', '.less', 'css'],
         modulesDirectories: ['node_modules', path.join(__dirname, './client')]
     },
-    devtool: 'eval',
+    devtool: 'inline-source-map',
 
     module: {
         loaders: [
@@ -37,7 +36,8 @@ module.exports = {
             },
             {
                 test:/\.less$/,
-                loader:ExtractTextPlugin.extract('style','css!less?strictMath&noIeCompat')
+                loader:ExtractTextPlugin.extract('style','css?sourceMap!' +
+                    'less?sourceMap')
 
             },
             {
@@ -55,7 +55,7 @@ module.exports = {
     plugins:[
         new ExtractTextPlugin('styles.css'),
         new webpack.DefinePlugin({
-            NODE_ENV: JSON.stringify(NODE_ENV)
+            NODE_ENV: JSON.stringify('development')
         }),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),

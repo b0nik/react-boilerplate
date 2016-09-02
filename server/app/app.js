@@ -22,13 +22,10 @@ app.use(api.bodyParser.json());
 app.use(api.bodyParser.urlencoded({extended: false}));
 app.use(api.cookieParser());
 
-
-app.get('/hi', (req, res)=> {
-    res.end("HI")
-});
+app.use(api.express.static(api.path.join(__dirname, './../../build')));
 
 
-if (app.get('env') === 'development') {
+if (app.get('env') === 'webpack') {
     const compiler = webpack(webpackConf);
     const middleware = webpackMiddleware(compiler, {
         publicPath: webpackConf.output.publicPath,
@@ -50,8 +47,7 @@ if (app.get('env') === 'development') {
     });
 } else {
     app.get('*', function response(req, res) {
-        app.use(api.express.static(api.path.join(__dirname, './../../build')));
-        res.sendFile(api.path.join(__dirname, '../../build/index.html'));
+        res.sendFile(api.path.join(__dirname, './../../build/index.html'));
     });
 }
 
@@ -65,7 +61,7 @@ app.use(function (err, req, res, next) {
 
 // development error handler
 // will print stacktrace
-    if (app.get('env') === 'development') {
+    if (app.get('env') !== 'production') {
         res.status(500).send('file not found');
         console.log(err.stack);
 

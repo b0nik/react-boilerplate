@@ -1,5 +1,4 @@
 'use strict';
-const NODE_ENV = process.env.NODE_ENV || 'production';
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -53,8 +52,8 @@ module.exports = {
             modules: false
         }),
         new webpack.DefinePlugin({
-            NODE_ENV: JSON.stringify(NODE_ENV)
-        })
+            'process.env.NODE_ENV': JSON.stringify('production')
+        }),
     ],
     module: {
         loaders: [
@@ -85,4 +84,4 @@ module.exports = {
 };
 
 
-// NODE_ENV=production webpack -p --config webpack.production.js
+//  webpack -p  --progress --colors --config webpack.production.js
