@@ -1,10 +1,7 @@
-const initialState={
-    title:'hello, this is Bright homepage'
-};
 
-export default function (state=initialState, action) {
+export default function (state={}, action) {
     switch (action.type){
-        case "CHANGE":
+        case "GET_PAGE":
             return action.payload;
 
         default:

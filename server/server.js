@@ -3,17 +3,17 @@
 /**
  * Module dependencies.
  */
-
+global.api = {};
+api.config=require('./app/config/config.json');
 const app = require('./app/app');
 const debug = require('debug')('node:server');
 const http = require('http');
-const config=require('./app/config/config.json');
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-const port = config.port;
+const port = api.config.port;
 
 app.listen(port, console.log(`started at localhost:${port}`));
 app.on('error', onError);

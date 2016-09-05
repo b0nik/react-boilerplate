@@ -55,7 +55,7 @@ module.exports = {
     plugins:[
         new ExtractTextPlugin('styles.css'),
         new webpack.DefinePlugin({
-            NODE_ENV: JSON.stringify('development')
+            'process.env.NODE_ENV': JSON.stringify('development')
         }),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),

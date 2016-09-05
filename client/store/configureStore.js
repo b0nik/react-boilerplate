@@ -7,7 +7,7 @@ export default function configureStore(initialState) {
     const logger = createLogger({
         collapsed: true,
         predicate: () =>
-        NODE_ENV === `development` // eslint-disable-line no-unused-vars
+        process.env.NODE_ENV === `development` // eslint-disable-line no-unused-vars
     });
 
     return createStore(rootReducer, applyMiddleware(thunkMiddleware,logger));
