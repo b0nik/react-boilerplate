@@ -1,18 +1,20 @@
-const router = api.express.Router();
 const Page = require('../models/page');
 const page = new Page();
 
-router.use('/homepage', (req, res, next)=> {
-    if (!!req.headers['x-requested-with']) {
-        Page.findOne({link: 'index'})
-            .then(
-                (data)=> {
-                    res.end(JSON.stringify(data))
-                }
-            )
-    } else {
-        next()
-    }
-});
 
-module.exports = router;
+module.exports = function (app) {
+    app.get('/pages', (req, res, next)=> {
+        if (!!req.headers['x-requested-with']) {
+            Page.find({})
+                .then(
+                    data=>{res.end(JSON.stringify(data))},
+                    err=>{
+                        console.log(err);
+                        res.end(err)
+                    }
+                )
+        } else {
+            next()
+        }
+    });
+};

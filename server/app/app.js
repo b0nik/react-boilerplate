@@ -4,8 +4,7 @@ api.favicon = require('serve-favicon');
 api.logger = require('morgan');
 api.mongoose = require('./libs/mongoose');
 api.cookieParser = require('cookie-parser');
-api.bodyParser = require('body-parser');
-const router=require('./routes/index');
+api.bodyParser = require('body-parser'); 
 
 //development
 const webpack = require('webpack');
@@ -21,8 +20,12 @@ var app = api.express();
 app.use(api.logger('dev'));
 app.use(api.bodyParser.json());
 app.use(api.bodyParser.urlencoded({extended: false}));
-app.use(api.cookieParser());
-app.use(router);
+app.use(api.cookieParser()); 
+
+api.fs.readdirSync(api.path.join(__dirname,'./routes')).forEach(file=>{
+    var name = file.substr(0, file.indexOf('.'));
+    require(api.path.join(__dirname,'./routes/') + name)(app);
+});
 
 app.use(api.express.static(api.path.join(__dirname, './../../build')));
 
